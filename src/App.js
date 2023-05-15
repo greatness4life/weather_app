@@ -1,23 +1,118 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [data, setData] = useState({});
+  const [location, setLocation] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const URL = `http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&APPID=90f7478d816b846712fef90a70f64d9d`;
+  const weatherIcon = `https://openweathermap.org/img/wn/`;
+
+  const handleClick = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleEnter = (e) => {
+    if (e.keyCode === 13 && location.length !== 2) {
+      axios
+        .get(URL)
+        .then((response) => {
+          setData(response.data);
+          setLocation("");
+        })
+        .catch((error) => {
+          setErrorMessage(error.message);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 5000);
+        });
+    }
+  };
+
+  const timezoneParsed = data.timezone;
+  const date = new Date();
+  const options = {
+    hour: "numeric",
+    minute: "numeric",
+    seconds: "numeric",
+    day: "numeric",
+    weekday: "short",
+    month: "short",
+    // year: "numeric",
+  };
+  const localTime = date.getTime();
+  const localOffset = date.getTimezoneOffset() * 60000;
+  const utc = localTime + localOffset;
+  const weatherLocation = utc + 1000 * timezoneParsed;
+  const LocationDate = new Date(weatherLocation).toLocaleString(
+    "en-US",
+    options
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="app_container">
+        <div className="searchbar">
+          <input
+            type="text"
+            value={location}
+            onChange={handleClick}
+            onKeyDown={handleEnter}
+            placeholder="Enter Location"
+          />
+          {errorMessage && (
+            <p className="err">
+              {errorMessage} <br /> Check your spelling and verify you enter
+              correct Location!
+            </p>
+          )}
+        </div>
+        <div className="container">
+          {data.main && (
+            <div className="main">
+              <p className="time">{LocationDate}</p>
+              <div className="location">
+                <h2>{data.name}</h2>
+                <p>{data.sys.country}. </p>
+              </div>
+              <div className="">
+                <div className="degrees">
+                  <img
+                    src={weatherIcon + data.weather[0].icon + ".png"}
+                    alt=""
+                    className="icons"
+                  />
+                  <h1 className="deg">
+                    {`${data.main.temp.toFixed()}°`}
+                    <span className="cent">c</span>
+                  </h1>
+                </div>
+              </div>
+              <div className="descr">
+                <h3 className="">{data.weather[0].description}</h3>
+              </div>
+            </div>
+          )}
+
+          {data.main && (
+            <div className="footer">
+              <div>
+                <h3>Feels Like</h3>
+                <h2>{data.main.feels_like.toFixed()}°</h2>
+              </div>
+              <div>
+                <h3>Humidity</h3>
+                <h2>{data.main.humidity}%</h2>
+              </div>
+              <div>
+                <h3>Wind Speed</h3>
+                <h2>{data.wind.speed.toFixed(1)}m/s </h2>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

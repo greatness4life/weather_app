@@ -1,13 +1,116 @@
-body {
+* {
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.App {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: relative;
+  color: #fff;
+}
+.App::before {
+  content: "";
+  background: url(./assets/nature-backgrounds.jpg) no-repeat center center/cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.app_container {
+  max-width: 700px;
+  padding: 0 10px;
+  margin: auto;
+}
+.container {
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.searchbar {
+  width: 60%;
+  margin: auto;
+}
+.searchbar input {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 6px 6px rgba(45, 44, 44, 0.2);
+  width: 100%;
+  border: 1px solid rgb(185, 185, 190);
+}
+input:focus {
+  outline: silver;
+}
+
+.location {
+  display: flex;
+}
+.location p {
+  margin-left: 0.5rem;
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 16px;
+}
+.location h2 {
+  font-weight: 800;
+  font-size: 2.5rem;
+}
+.deg .cent {
+  font-size: 34px;
+  margin-left: -20px;
+}
+::placeholder {
+  font-size: 15px;
+  color: gray;
+}
+.main {
+  padding-top: 40px;
+}
+.time {
+  font-weight: 600;
+}
+.deg {
+  font-size: 4rem;
+}
+.container .descr {
+  display: inline-block;
+  position: relative;
+  top: 30%;
+  right: -95%;
+  transform-origin: 0 0;
+  transform: rotate(270deg);
+}
+.degrees {
+  display: flex;
+}
+.icons {
+  width: 100px;
+}
+.footer {
+  border: 1px solid gray;
+  border-radius: 10px;
+  background: rgba(225, 225, 225, 0.2);
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.err {
+  text-align: center;
+  padding: 10px 0;
 }
