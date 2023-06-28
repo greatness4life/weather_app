@@ -1,12 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 
+const WEATHER_API = process.env.REACT_APP_WEATHER_APPID;
+
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const URL = `http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&APPID=90f7478d816b846712fef90a70f64d9d`;
+  const URL = `http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${WEATHER_API}`;
   const weatherIcon = `https://openweathermap.org/img/wn/`;
 
   const handleClick = (event) => {
@@ -60,6 +62,7 @@ function App() {
             onChange={handleClick}
             onKeyDown={handleEnter}
             placeholder="Enter Location"
+            name="location"
           />
           {errorMessage && (
             <p className="err">
