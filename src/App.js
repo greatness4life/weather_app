@@ -8,7 +8,7 @@ function App() {
   const [location, setLocation] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const URL = `http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${WEATHER_API}`;
+  const URL = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${WEATHER_API}`;
   const weatherIcon = `https://openweathermap.org/img/wn/`;
 
   const handleClick = (event) => {
