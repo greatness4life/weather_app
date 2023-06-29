@@ -24,11 +24,19 @@ function App() {
           setLocation("");
         })
         .catch((error) => {
+          error.message = "That cannot be found!";
           setErrorMessage(error.message);
           setTimeout(() => {
             setErrorMessage("");
           }, 5000);
         });
+    } else {
+      if (location.length !== 3) {
+        setErrorMessage("You need to enter at least 3 characters");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 2000);
+      }
     }
   };
 
@@ -64,12 +72,7 @@ function App() {
             placeholder="Enter Location"
             name="location"
           />
-          {errorMessage && (
-            <p className="err">
-              {errorMessage} <br /> Check your spelling and verify you enter
-              correct Location!
-            </p>
-          )}
+          {errorMessage && <p className="err">{errorMessage}</p>}
         </div>
         <div className="container">
           {data.main && (
